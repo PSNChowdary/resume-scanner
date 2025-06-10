@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Score Checker</title>
+</head>
+<body>
+    <h1>Resume Score Checker</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label>Upload Resume (.pdf or .docx):</label><br><br>
+        <input type="file" name="resume_file" accept=".pdf,.docx" required><br><br>
+        <input type="submit" value="Check Resume Score">
+    </form>
+
+    {% if score %}
+        <h2>Resume Score: {{ score }} / 100</h2>
+
+        {% if suggestions %}
+            <h3>Suggestions for Improvement:</h3>
+            <ul>
+                {% for tip in suggestions %}
+                    <li>{{ tip }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="color:green;">Great resume! Very well optimized.</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Optimizer</title>
+</head>
+<body>
+    <h1>AI Resume Optimizer</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label>Upload Your Resume (.pdf or .docx):</label><br>
+        <input type="file" name="resume_file" accept=".pdf,.docx" required><br><br>
+
+        <input type="submit" value="Analyze & Optimize">
+    </form>
+
+    {% if suggestions %}
+        <h2>AI Suggestions to Improve Your Resume:</h2>
+        <ul>
+        {% for suggestion in suggestions %}
+            <li>{{ suggestion }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

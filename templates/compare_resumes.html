@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compare Resumes</title>
+    <style>
+        .card { border: 1px solid #ddd; padding: 20px; margin: 10px; border-radius: 10px; width: 30%; float: left; }
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .toggle input { display: none; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px; width: 26px;
+            left: 4px; bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body>
+    <h1>Compare Resumes</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Toggle to compare 3 resumes:</label>
+        <label class="toggle">
+            <input type="checkbox" id="toggleCompare" name="compare_count" value="3" onchange="toggleText(this)">
+            <span class="slider"></span>
+        </label>
+        <p id="toggleText">Currently comparing: 2 resumes</p>
+
+        <br><br>
+        <input type="file" name="resume_files" accept=".pdf,.docx" multiple required>
+        <br><br>
+        <button type="submit">Compare Resumes</button>
+    </form>
+
+    <br><br><br>
+
+    {% if resume_data %}
+        <div style="display: flex; gap: 10px;">
+        {% for resume in resume_data %}
+            <div class="card">
+                <h3>{{ resume.name }}</h3>
+                <h4>Strengths:</h4>
+                <ul>
+                    {% for item in resume.strengths %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                <h4>Weaknesses:</h4>
+                <ul>
+                    {% for item in resume.weaknesses %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+    <script>
+        function toggleText(el) {
+            const label = document.getElementById('toggleText');
+            if (el.checked) {
+                el.value = 3;
+                label.innerText = "Currently comparing: 3 resumes";
+            } else {
+                el.value = 2;
+                label.innerText = "Currently comparing: 2 resumes";
+            }
+        }
+    </script>
+</body>
+</html>
